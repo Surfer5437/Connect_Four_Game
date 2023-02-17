@@ -14,6 +14,9 @@ for (slot of slots) {
         if (!e.target.classList.contains('played')) {
             e.target.classList.remove('slot');
             e.target.classList.add('played');
+            e.target.dataset.player=curPlayer.color;
+            console.log(e.target.dataset.column, e.target.dataset.row, e.target.dataset.player);
+            
             e.target.style.backgroundColor = curPlayer.color;
             if (curPlayer === player1) {
                 curPlayer = player2;
