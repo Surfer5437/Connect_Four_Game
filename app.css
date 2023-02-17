@@ -16,8 +16,12 @@
     border: 2px solid white;
 }
 .board{
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
     width: 400px;
-    height:350px;
+    height:auto;
     background-color: blue;
     text-align: center;
     padding: 25px 5px 0 5px;
