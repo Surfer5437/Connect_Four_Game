@@ -7,6 +7,15 @@
     display: inline-block;
     border: 2px solid white;
 }
+#score {
+    font-style: italic;
+    text-align: center;
+    color: red;
+}
+h1{
+    text-align: center;
+    padding-top: 5%;
+}
 .played {
     width: 50px;
     height: 50px;
