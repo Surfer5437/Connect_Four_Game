@@ -39,12 +39,15 @@ const colList = ['a','b','c','d','e','f','g'];
 const rowList = ['1','2','3','4','5','6'];
 let curColorChecker=""
 let winCheckerCounter=0;
+let winPiece1,winPiece2,winPiece3,winPiece4;
+console.log(slots)
 function checkVertical(){
 
 for (const i of colList) {
     for (const j of rowList) {
         if (curColorChecker===""){
             curColorChecker=slot.color;
+            winPiece1=slot;
         }
         else if (slot.color===curColorChecker){
             winCheckerCounter++;
