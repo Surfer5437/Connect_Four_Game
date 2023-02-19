@@ -9,13 +9,13 @@ const player2 = {
 let curPlayer=player1;
 const board = document.querySelector(".board");
 const slots = document.querySelectorAll("div");
-let a = 6;
-let b = 6;
-let c = 6;
-let d = 6;
-let e = 6;
-let f = 6;
-let g = 6;
+let a = 5;
+let b = 5;
+let c = 5;
+let d = 5;
+let e = 5;
+let f = 5;
+let g = 5;
 
 
 
@@ -39,7 +39,7 @@ for (slot of slots) {
 function gravity(playingPiece, el){
     const playData=playingPiece.dataset;
 switch (playData.column) {
-                case "a":
+                case "0":
                     if (playData.row == a){
                         console.log("worked");
                         played(el);
@@ -47,7 +47,7 @@ switch (playData.column) {
                     }
                 
                 break;
-                case "b":
+                case "1":
                     if (playData.row == b){
                         console.log("worked");
                          played(el);
@@ -55,7 +55,7 @@ switch (playData.column) {
                     }
                 
                 break;
-                case "c":
+                case "2":
                     if (playData.row == c){
                         console.log("worked");
                          played(el);
@@ -63,7 +63,7 @@ switch (playData.column) {
                     }
                 
                 break;
-                case "d":
+                case "3":
                     if (playData.row == d){
                         console.log("worked");
                          played(el);
@@ -71,7 +71,7 @@ switch (playData.column) {
                     }
                 
                 break;
-                case "e":
+                case "4":
                     if (playData.row == e){
                         console.log("worked");
                          played(el);
@@ -79,7 +79,7 @@ switch (playData.column) {
                     }
                 
                 break;
-                case "f":
+                case "5":
                     if (playData.row == f){
                         console.log("worked");
                          played(el);
@@ -87,7 +87,7 @@ switch (playData.column) {
                     }
                 
                 break;
-                case "g":
+                case "6":
                     if (playData.row == g){
                         console.log("worked");
                          played(el);
@@ -110,6 +110,9 @@ function played (e){
     e.target.dataset.player=curPlayer.color;
     console.log(e.target.dataset.column, e.target.dataset.row, e.target.dataset.player);
     e.target.style.backgroundColor = curPlayer.color;
+    const boardRow = e.target.dataset.row;
+    const boardCol = e.target.dataset.column;
+    boardGrid[`${boardRow}`][`${boardCol}`]=curPlayer.color;
     if (curPlayer === player1) {
         curPlayer = player2;
         console.log()
@@ -128,9 +131,6 @@ function checkWinner(){
 }
 
 
-
-const colList = ['a','b','c','d','e','f','g'];
-const rowList = ['1','2','3','4','5','6'];
 let curColorChecker="";
 let winCheckerCounter=0;
 // let winPiece1,winPiece2,winPiece3,winPiece4;
@@ -144,3 +144,11 @@ function checkHorizontal(){
 function checkDiagonal(){
 
 }
+const boardGrid=[
+    [undefined,undefined,undefined,undefined,undefined,undefined,undefined],
+    [undefined,undefined,undefined,undefined,undefined,undefined,undefined],
+    [undefined,undefined,undefined,undefined,undefined,undefined,undefined],
+    [undefined,undefined,undefined,undefined,undefined,undefined,undefined],
+    [undefined,undefined,undefined,undefined,undefined,undefined,undefined],
+    [undefined,undefined,undefined,undefined,undefined,undefined,undefined]
+];
