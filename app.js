@@ -126,7 +126,6 @@ else if (gameWon===true){
 }
 }
 
-
 //Checking for a winning 4 piece combo
 function checkWinner(){
     checkDiagonal();
@@ -134,14 +133,7 @@ function checkWinner(){
     checkHorizontal();
     checkDiagonalOpposite();
 }
-
-function removeEventListeners(){
-    for (const slot of slots) {
-        slot.removeEventListener;
-    }
-}
-
-
+// --Logical Board used for manipulation and game logic --
 const boardGrid=[
     [undefined,undefined,undefined,undefined,undefined,undefined,undefined],
     [undefined,undefined,undefined,undefined,undefined,undefined,undefined],
