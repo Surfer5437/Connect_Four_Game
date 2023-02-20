@@ -17,31 +17,25 @@ let e = 5;
 let f = 5;
 let g = 5;
 
-
-
 // --On click event check if conditions are met for a non-played slot
 // for insertion of a token.
 for (slot of slots) {
     slot.addEventListener("click", e => {
         const playingPiece = e.target;
-        console.log(playingPiece);
+        // console.log(playingPiece);
         if (!playingPiece.classList.contains('played')) {
-
-            gravity(playingPiece, e)
-            
-           
-            checkWinner();
+            gravity(playingPiece, e);
+            checkWinner(playingPiece);
         }
     })
 }
 
-// --Building Gravity--
+// --Token Gravity--
 function gravity(playingPiece, el){
     const playData=playingPiece.dataset;
 switch (playData.column) {
                 case "0":
                     if (playData.row == a){
-                        console.log("worked");
                         played(el);
                         a--;
                     }
@@ -49,7 +43,6 @@ switch (playData.column) {
                 break;
                 case "1":
                     if (playData.row == b){
-                        console.log("worked");
                          played(el);
                          b--;
                     }
@@ -57,7 +50,6 @@ switch (playData.column) {
                 break;
                 case "2":
                     if (playData.row == c){
-                        console.log("worked");
                          played(el);
                         c--;
                     }
@@ -65,7 +57,6 @@ switch (playData.column) {
                 break;
                 case "3":
                     if (playData.row == d){
-                        console.log("worked");
                          played(el);
                         d--;
                     }
@@ -73,7 +64,6 @@ switch (playData.column) {
                 break;
                 case "4":
                     if (playData.row == e){
-                        console.log("worked");
                          played(el);
                         e--;
                     }
@@ -81,7 +71,6 @@ switch (playData.column) {
                 break;
                 case "5":
                     if (playData.row == f){
-                        console.log("worked");
                          played(el);
                         f--;
                     }
@@ -89,7 +78,6 @@ switch (playData.column) {
                 break;
                 case "6":
                     if (playData.row == g){
-                        console.log("worked");
                          played(el);
                         g--;
                     }
@@ -100,7 +88,6 @@ switch (playData.column) {
             }
 }
 
-
 // --Played piece logic-- Changing current player and checking if current 
 // clicked piece has been played yet and setting it to played and
 // and changing attributes on the token.
@@ -108,14 +95,14 @@ function played (e){
     e.target.classList.remove('slot');
     e.target.classList.add('played');
     e.target.dataset.player=curPlayer.color;
-    console.log(e.target.dataset.column, e.target.dataset.row, e.target.dataset.player);
+    // console.log(e.target.dataset.column, e.target.dataset.row, e.target.dataset.player);
     e.target.style.backgroundColor = curPlayer.color;
     const boardRow = e.target.dataset.row;
     const boardCol = e.target.dataset.column;
     boardGrid[`${boardRow}`][`${boardCol}`]=curPlayer.color;
     if (curPlayer === player1) {
         curPlayer = player2;
-        console.log()
+        
     }
     else if (curPlayer === player2) {
         curPlayer = player1;
@@ -124,18 +111,39 @@ function played (e){
 
 
 //Checking for a winning 4 piece combo
-function checkWinner(){
-    checkDiagonal();
-    checkVertical();
-    checkHorizontal();
+function checkWinner(e){
+    checkDiagonal(e);
+    checkVertical(e);
+    checkHorizontal(e);
 }
 
 
 let curColorChecker="";
 let winCheckerCounter=0;
-// let winPiece1,winPiece2,winPiece3,winPiece4;
-// console.log(slots);
-function checkVertical(){
+
+function checkVertical(e){
+    for (let i = 0; i < 5; i++) {
+        for (const col of boardGrid) {
+            if (curColorChecker!==""&& col[i]!==undefined){
+                if (col[i]===curColorChecker) {
+                    winCheckerCounter++;
+                    if (winCheckerCounter === 4){
+                        alert(`${curColorChecker} wins!!!`);
+                    }
+                    console.log(curColorChecker);
+                }
+                else if (col[i]!==curColorChecker){
+                    winCheckerCounter=0;
+                    curColorChecker=e.dataset.player;
+                }
+            }
+            else if (curColorChecker==="") {
+                curColorChecker=e.dataset.player;
+
+                console.log(curColorChecker);
+            }
+        }
+    }
 
 }
 function checkHorizontal(){
