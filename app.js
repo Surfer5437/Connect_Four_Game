@@ -6,9 +6,11 @@ const player2 = {
     color:"blue",
     wins:0
 };
+let gameWon=false;
 let curPlayer=player1;
 const board = document.querySelector(".board");
 const slots = document.querySelectorAll("div");
+const winningHeader = document.getElementById("winner");
 let a = 5;
 let b = 5;
 let c = 5;
@@ -21,12 +23,17 @@ let g = 5;
 // for insertion of a token.
 for (slot of slots) {
     slot.addEventListener("click", e => {
-        const playingPiece = e.target;
+        if (gameWon === false) {
+            const playingPiece = e.target;
         // console.log(playingPiece);
         if (!playingPiece.classList.contains('played')) {
             gravity(playingPiece, e);
-            checkWinner(playingPiece);
         }
+        }
+        else if(gameWon=true){
+            return;
+        }
+        
     })
 }
 
@@ -100,58 +107,41 @@ function played (e){
     const boardRow = e.target.dataset.row;
     const boardCol = e.target.dataset.column;
     boardGrid[`${boardRow}`][`${boardCol}`]=curPlayer.color;
+
+    checkWinner(e.target);
+    if(gameWon===false){
     if (curPlayer === player1) {
         curPlayer = player2;
-        
+        winningHeader.innerText=`PLAYER 2 GO`;
+        winningHeader.style.color = 'blue';
     }
     else if (curPlayer === player2) {
         curPlayer = player1;
+        winningHeader.innerText=`PLAYER 1 GO`;
+        winningHeader.style.color = 'red';
     };
+}
+else if (gameWon===true){
+    return;
+}
 }
 
 
 //Checking for a winning 4 piece combo
-function checkWinner(e){
-    checkDiagonal(e);
-    checkVertical(e);
-    checkHorizontal(e);
+function checkWinner(){
+    checkDiagonal();
+    checkVertical();
+    checkHorizontal();
+    checkDiagonalOpposite();
 }
 
-
-let curColorChecker="";
-let winCheckerCounter=0;
-
-function checkVertical(e){
-    for (let i = 0; i < 5; i++) {
-        for (const col of boardGrid) {
-            if (curColorChecker!==""&& col[i]!==undefined){
-                if (col[i]===curColorChecker) {
-                    winCheckerCounter++;
-                    if (winCheckerCounter === 4){
-                        alert(`${curColorChecker} wins!!!`);
-                    }
-                    console.log(curColorChecker);
-                }
-                else if (col[i]!==curColorChecker){
-                    winCheckerCounter=0;
-                    curColorChecker=e.dataset.player;
-                }
-            }
-            else if (curColorChecker==="") {
-                curColorChecker=e.dataset.player;
-
-                console.log(curColorChecker);
-            }
-        }
+function removeEventListeners(){
+    for (const slot of slots) {
+        slot.removeEventListener;
     }
-
 }
-function checkHorizontal(){
 
-}
-function checkDiagonal(){
 
-}
 const boardGrid=[
     [undefined,undefined,undefined,undefined,undefined,undefined,undefined],
     [undefined,undefined,undefined,undefined,undefined,undefined,undefined],
@@ -160,3 +150,57 @@ const boardGrid=[
     [undefined,undefined,undefined,undefined,undefined,undefined,undefined],
     [undefined,undefined,undefined,undefined,undefined,undefined,undefined]
 ];
+
+function checkVertical(){
+
+    for (let j = 0; j < 3; j++) {
+        for (let i = 0; i < 7; i++) {
+        if (boardGrid[j][i] !== undefined && boardGrid[j][i] === boardGrid[j+1][i] && boardGrid[j+1][i] === boardGrid[j+2][i] && boardGrid[j+2][i] === boardGrid[j+3][i]){
+            const capWinner = boardGrid[j][i].toUpperCase();
+                            winningHeader.style.color = boardGrid[j][i];
+                            winningHeader.innerText=`${capWinner} IS THE WINNER!!!!`
+                            gameWon = true;
+        }
+        }
+    }
+}
+function checkHorizontal(){
+    for (let colu = 0; colu < boardGrid.length; colu++) {
+        const grid = boardGrid[colu];
+        for (let i = 0; i < 3; i++) {
+            if (grid[i] !== undefined && grid[i] === grid[i+1] && grid[i+1] === grid[i+2] && grid[i+2] === grid[i+3]){
+                        const capWinner = grid[i].toUpperCase();
+                        winningHeader.style.color = grid[1];
+                        winningHeader.innerText=`${capWinner} IS THE WINNER!!!!`
+                        gameWon = true;
+                }
+            }
+        }
+}
+function checkDiagonal(){
+    for (let j = 0; j < 3; j++) {
+        for (let i = 0; i < 4; i++) {
+        if (boardGrid[j][i] !== undefined && boardGrid[j][i] === boardGrid[j+1][i+1] && boardGrid[j+1][i+1] === boardGrid[j+2][i+2] && boardGrid[j+2][i+2] === boardGrid[j+3][i+3]){
+            const capWinner = boardGrid[j][i].toUpperCase();
+                            winningHeader.style.color = boardGrid[j][i];
+                            winningHeader.innerText=`${capWinner} IS THE WINNER!!!!`
+                            gameWon = true;
+        }
+        }
+    }
+}
+function checkDiagonalOpposite(){
+    for (let j = 5; j > 2; j--) {
+        for (let i = 0; i < 4; i++) {
+        if (boardGrid[j][i] !== undefined && 
+            boardGrid[j][i] === boardGrid[j-1][i+1] && 
+            boardGrid[j-1][i+1] === boardGrid[j-2][i+2] && 
+            boardGrid[j-2][i+2] === boardGrid[j-3][i+3]){
+            const capWinner = boardGrid[j][i].toUpperCase();
+                            winningHeader.style.color = boardGrid[j][i];
+                            winningHeader.innerText=`${capWinner} IS THE WINNER!!!!`
+                            gameWon = true;
+        }
+        }
+    }
+}

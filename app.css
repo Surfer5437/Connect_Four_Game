@@ -7,7 +7,7 @@
     display: inline-block;
     border: 2px solid white;
 }
-#score {
+#winner {
     font-style: italic;
     text-align: center;
     color: red;
