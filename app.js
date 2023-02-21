@@ -18,7 +18,6 @@ let d = 5;
 let e = 5;
 let f = 5;
 let g = 5;
-
 // --On click event check if conditions are met for a non-played slot
 // for insertion of a token.
 for (slot of slots) {
